@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rajan Saptha Swaraalu Music And Cultural Association</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="page-glow page-glow--left"></div>
+    <div class="page-glow page-glow--right"></div>
+    <div class="staff staff--top" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <header class="site-header">
+      <div class="shell header-inner">
+        <div class="nav-brand">
+          <img src="/images/RS7-logo.png" alt="Rajan Saptha Swaraalu Music And Cultural Association logo" class="brand-logo" />
+          <div class="nav-brand__copy">
+            <p class="eyebrow">Musical Organisation</p>
+            <strong>Rajan Saptha Swaraalu Music And Cultural Association</strong>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme">
+            <span class="theme-toggle__light">Light</span>
+            <span class="theme-toggle__dark">Dark</span>
+          </button>
+          <a class="button ghost" href="/admin">Open admin</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="shell main-layout">
+      <section class="hero">
+        <div class="hero-copy card card--hero">
+          <p class="eyebrow">Welcome</p>
+          <h1>Rajan Saptha Swaraalu Music And Cultural Association celebrates performances, milestones, and creative partnerships.</h1>
+          <p class="lead">
+            Present the institute's achievements, collaborations, and gallery moments through a warm public website with
+            a simple admin experience behind it.
+          </p>
+          <div class="hero-badges">
+            <span>Melody</span>
+            <span>Rhythm</span>
+            <span>Harmony</span>
+          </div>
+          <div class="hero-actions">
+            <a class="button" href="#highlights">Explore highlights</a>
+            <a class="button ghost" href="/admin">Manage content</a>
+          </div>
+        </div>
+
+        <aside class="hero-panel card">
+          <p class="eyebrow">Identity</p>
+          <h2>Sound, story, and stage presence</h2>
+          <ul class="accent-list">
+            <li>Showcase institute achievements with clarity</li>
+            <li>Present collaborations as active cultural partnerships</li>
+            <li>Turn the gallery into a living performance archive</li>
+          </ul>
+          <div class="note-cluster" aria-hidden="true">
+            <span>&#9834;</span>
+            <span>&#9835;</span>
+            <span>&#9836;</span>
+          </div>
+        </aside>
+      </section>
+
+      <section id="highlights" class="stat-grid">
+        <article class="stat-card">
+          <span>Archive</span>
+          <strong>Gallery-ready</strong>
+        </article>
+        <article class="stat-card">
+          <span>Growth</span>
+          <strong>Achievement-led</strong>
+        </article>
+        <article class="stat-card">
+          <span>Network</span>
+          <strong>Collaboration-first</strong>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="card section-card">
+          <div class="section-title">
+            <p class="eyebrow">Milestones</p>
+            <h3>Achievements</h3>
+          </div>
+          <div id="achievements-list" class="stack empty-state">Loading achievements...</div>
+        </article>
+
+        <article class="card section-card">
+          <div class="section-title">
+            <p class="eyebrow">Partnerships</p>
+            <h3>Collaborations</h3>
+          </div>
+          <div id="collaborations-list" class="stack empty-state">Loading collaborations...</div>
+        </article>
+      </section>
+
+      <section class="card section-card">
+        <div class="section-title">
+          <p class="eyebrow">Visual Archive</p>
+          <h3>Gallery</h3>
+        </div>
+        <div id="gallery-list" class="gallery-grid empty-state">Loading gallery...</div>
+      </section>
+    </main>
+
+    <script src="/script.js"></script>
+  </body>
+  </html>

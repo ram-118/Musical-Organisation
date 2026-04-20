@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rajan Saptha Swaraalu Music And Cultural Association Admin</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="page-glow page-glow--left"></div>
+    <div class="page-glow page-glow--right"></div>
+    <div class="staff staff--top" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <header class="site-header">
+      <div class="shell header-inner">
+        <div class="nav-brand nav-brand--stack">
+          <p class="eyebrow">Admin Panel</p>
+          <h1>Manage Rajan Saptha Swaraalu Music And Cultural Association content</h1>
+        </div>
+        <div class="header-actions">
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Toggle color theme">
+            <span class="theme-toggle__light">Light</span>
+            <span class="theme-toggle__dark">Dark</span>
+          </button>
+          <a class="button ghost" href="/">Back to site</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="shell admin-layout">
+      <section class="admin-hero">
+        <article class="card card--hero">
+          <p class="eyebrow">Control Center</p>
+          <h2>Publish new milestones, collaborators, and gallery moments for Rajan Saptha Swaraalu Music And Cultural Association.</h2>
+          <p class="muted">Enter the password from your <code>.env</code> file to unlock admin actions.</p>
+          <div class="hero-badges">
+            <span>Achievements</span>
+            <span>Partners</span>
+            <span>Gallery</span>
+          </div>
+        </article>
+
+        <article class="card admin-access">
+          <h2>Admin Login</h2>
+          <label class="field">
+            <span>Password</span>
+            <input id="admin-password" type="password" placeholder="Enter admin password" />
+          </label>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <form id="achievement-form" class="card admin-form">
+          <p class="eyebrow">Milestones</p>
+          <h2>Add Achievement</h2>
+          <label class="field">
+            <span>Title</span>
+            <input name="title" type="text" required />
+          </label>
+          <label class="field">
+            <span>Description</span>
+            <textarea name="description" rows="4"></textarea>
+          </label>
+          <button class="button" type="submit">Save achievement</button>
+        </form>
+
+        <form id="collaboration-form" class="card admin-form">
+          <p class="eyebrow">Partnerships</p>
+          <h2>Add Collaboration</h2>
+          <label class="field">
+            <span>Name</span>
+            <input name="name" type="text" required />
+          </label>
+          <label class="field">
+            <span>Description</span>
+            <textarea name="description" rows="4"></textarea>
+          </label>
+          <button class="button" type="submit">Save collaboration</button>
+        </form>
+      </section>
+
+      <form id="image-form" class="card admin-form">
+        <p class="eyebrow">Gallery</p>
+        <h2>Upload Image</h2>
+        <label class="field">
+          <span>Title</span>
+          <input name="title" type="text" />
+        </label>
+        <label class="field">
+          <span>Image file</span>
+          <input name="image" type="file" accept="image/*" required />
+        </label>
+        <button class="button" type="submit">Upload image</button>
+      </form>
+
+      <section class="card admin-library">
+        <p class="eyebrow">Manage Content</p>
+        <h2>Remove Existing Items</h2>
+        <div class="content-grid">
+          <div class="admin-list-block">
+            <h3>Achievements</h3>
+            <div id="admin-achievements-list" class="admin-items empty-state">Loading achievements...</div>
+          </div>
+          <div class="admin-list-block">
+            <h3>Collaborations</h3>
+            <div id="admin-collaborations-list" class="admin-items empty-state">Loading collaborations...</div>
+          </div>
+        </div>
+        <div class="admin-list-block admin-list-block--full">
+          <h3>Gallery Images</h3>
+          <div id="admin-images-list" class="admin-items empty-state">Loading images...</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <p class="eyebrow">Live Feedback</p>
+        <h2>Status</h2>
+        <div id="admin-status" class="status-panel">Waiting for action...</div>
+      </section>
+    </main>
+
+    <script src="/admin.js"></script>
+  </body>
+  </html>
