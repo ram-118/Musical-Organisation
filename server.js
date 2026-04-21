@@ -15,6 +15,7 @@ const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
 const publicImagesDir = path.join(__dirname, "public", "images");
 const dataDir = path.join(__dirname, "data");
 const fallbackDataFile = path.join(dataDir, "content.json");
+const allowedImageMimeTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
 let lastDatabaseAttemptAt = 0;
 let lastDatabaseStatus = null;
 
@@ -35,12 +36,25 @@ app.use(express.static(path.join(__dirname, "public")));
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => cb(null, publicImagesDir),
   filename: (_req, file, cb) => {
-    const safeName = `${Date.now()}-${file.originalname.replace(/\s+/g, "-")}`;
+    const originalName = path.basename(file.originalname);
+    const sanitizedName = originalName.replace(/[^a-zA-Z0-9._-]/g, "-");
+    const safeName = `${Date.now()}-${sanitizedName}`;
     cb(null, safeName);
   }
 });
 
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (_req, file, cb) => {
+    if (!allowedImageMimeTypes.has(file.mimetype)) {
+      cb(new Error("Only image files are allowed (jpg, png, webp, gif)."));
+      return;
+    }
+
+    cb(null, true);
+  }
+});
 
 async function connectDatabase() {
   if (mongoose.connection.readyState === 1) {
@@ -330,6 +344,22 @@ app.delete("/api/images/:id", checkAdmin, async (req, res) => {
 app.get("*", (req, res) => {
   const page = req.path === "/admin" ? "admin.html" : "index.html";
   res.sendFile(path.join(__dirname, "public", page));
+});
+
+app.use((error, _req, res, next) => {
+  if (error instanceof multer.MulterError) {
+    if (error.code === "LIMIT_FILE_SIZE") {
+      return res.status(400).json({ error: "Image must be smaller than 5MB." });
+    }
+
+    return res.status(400).json({ error: error.message });
+  }
+
+  if (error?.message?.includes("Only image files are allowed")) {
+    return res.status(400).json({ error: error.message });
+  }
+
+  next(error);
 });
 
 app.listen(port, () => {

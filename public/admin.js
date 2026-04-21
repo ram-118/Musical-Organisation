@@ -5,6 +5,19 @@ const adminAchievementsList = document.getElementById("admin-achievements-list")
 const adminCollaborationsList = document.getElementById("admin-collaborations-list");
 const adminImagesList = document.getElementById("admin-images-list");
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function normalizeImageUrl(url) {
+  return typeof url === "string" && url.startsWith("/images/") ? url : "/images/RS7-logo.png";
+}
+
 function applyTheme(theme) {
   document.body.dataset.theme = theme;
 }
@@ -80,6 +93,7 @@ async function deleteItem(url) {
 
 function renderAdminList(container, items, type) {
   if (!items.length) {
+    container.classList.add("empty-state");
     container.textContent = `No ${type} available.`;
     return;
   }
@@ -88,11 +102,13 @@ function renderAdminList(container, items, type) {
   container.innerHTML = items
     .map((item) => {
       const id = item._id || item.id;
-      const title = item.title || item.name || "Untitled";
-      const subtitle = item.description || item.filename || "";
+      const title = escapeHtml(item.title || item.name || "Untitled");
+      const subtitle = escapeHtml(item.description || item.filename || "");
+      const safeId = escapeHtml(id);
+      const imageUrl = normalizeImageUrl(item.url);
       const preview =
         type === "images"
-          ? `<img class="admin-item__thumb" src="${item.url}?v=${encodeURIComponent(item.createdAt || id)}" alt="${title}">`
+          ? `<img class="admin-item__thumb" src="${imageUrl}?v=${encodeURIComponent(item.createdAt || id)}" alt="${title}">`
           : "";
 
       return `
@@ -104,7 +120,7 @@ function renderAdminList(container, items, type) {
               <span>${subtitle || "No extra details."}</span>
             </div>
           </div>
-          <button class="button button--danger admin-remove" type="button" data-type="${type}" data-id="${id}">
+          <button class="button button--danger admin-remove" type="button" data-type="${type}" data-id="${safeId}">
             Remove
           </button>
         </article>

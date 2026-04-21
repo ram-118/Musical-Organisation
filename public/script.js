@@ -1,5 +1,18 @@
 const themeStorageKey = "music-website-theme";
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function normalizeImageUrl(url) {
+  return typeof url === "string" && url.startsWith("/images/") ? url : "/images/RS7-logo.png";
+}
+
 function applyTheme(theme) {
   document.body.dataset.theme = theme;
 }
@@ -39,15 +52,19 @@ function renderList(containerId, items, titleKey, descriptionKey) {
     return;
   }
 
+  container.classList.remove("empty-state");
   container.innerHTML = items
-    .map(
-      (item) => `
+    .map((item) => {
+      const title = escapeHtml(item[titleKey]);
+      const description = escapeHtml(item[descriptionKey] || "Details will appear here.");
+
+      return `
         <div class="item">
-          <strong>${item[titleKey]}</strong>
-          <span>${item[descriptionKey] || "Details will appear here."}</span>
+          <strong>${title}</strong>
+          <span>${description}</span>
         </div>
-      `
-    )
+      `;
+    })
     .join("");
 }
 
@@ -61,14 +78,17 @@ function renderGallery(items) {
 
   container.classList.remove("empty-state");
   container.innerHTML = items
-    .map(
-      (item) => `
+    .map((item) => {
+      const title = escapeHtml(item.title || "Gallery image");
+      const src = normalizeImageUrl(item.url);
+
+      return `
         <figure class="gallery-card">
-          <img src="${item.url}?v=${encodeURIComponent(item.createdAt || item.id || Date.now())}" alt="${item.title}" />
-          <p>${item.title}</p>
+          <img src="${src}?v=${encodeURIComponent(item.createdAt || item.id || Date.now())}" alt="${title}" />
+          <p>${title}</p>
         </figure>
-      `
-    )
+      `;
+    })
     .join("");
 }
 
